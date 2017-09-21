@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace EventMailer
 {
@@ -18,6 +19,7 @@ namespace EventMailer
         }
         public void FireTheEventInitiator()
         {
+            object birthday1 = ConfigurationSettings.AppSettings.GetValues(0);
             EventDelegate eventsManager = new EventDelegate(birthday.EventFirer);
             eventsManager += anniversary.EventFirer;
             while (true)

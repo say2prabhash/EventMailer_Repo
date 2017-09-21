@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Office;
+//using Microsoft.Office;
 using Microsoft.Vbe.Interop;
 using System.Runtime.InteropServices;
 using Bytescout.Spreadsheet;
+using System.Data.SqlClient;
+using System.Configuration;
 //using Excel = Microsoft.Office.Interop.Excel;
 namespace EventMailer
 {
    
-    class DataRetriever
+    public class DataRetriever
     {
         Dictionary<string, string> birthdayData;
         Dictionary<string, Dictionary<string,string>> anniversaryData;
@@ -21,9 +23,26 @@ namespace EventMailer
         }
         public Dictionary<string,string> RetrieveBirthdayData()
         {
-            Spreadsheet sheet = new Spreadsheet();
-            sheet.LoadFromFile(@"C:\\Users\\User\\Desktop\\EmployeeData.xls");
-            Worksheet worksheet = sheet.Workbook.Worksheets.ByName("Sheet1");
+            SqlConnection myConnection = new SqlConnection("Data Source=TAVDESK088;User Id=sa;Password=test123!@#;Initial Catalog=EmployeeData");
+            try
+            {
+                myConnection.Open();
+                SqlDataReader reader = null;
+                SqlCommand command = new SqlCommand("select * from Employee", myConnection);
+                reader = command.ExecuteReader();
+                while(reader.Read())
+                {
+                    birthdayData[reader["Employee Name"].ToString()] = reader["DOB"].ToString();
+                }
+            }
+            catch(SqlException ex)
+            {
+                return null;
+            }
+            finally
+            {
+                myConnection.Close();
+            }
             return birthdayData;
         }
         public Dictionary<string,Dictionary<string,string>> RetrieveAnniversaryData()
