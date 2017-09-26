@@ -48,6 +48,7 @@
     <Compile Include="AnniversaryEvent.cs" />
     <Compile Include="BirthdayEvent.cs" />
     <Compile Include="Contracts\IEvents.cs" />
+    <Compile Include="DataAnalyzer.cs" />
     <Compile Include="DataRetriever.cs" />
     <Compile Include="EventFiring.cs" />
     <Compile Include="Mailer.cs" />

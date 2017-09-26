@@ -14,12 +14,21 @@ namespace EventMailer.Test
             fire.FireTheEventInitiator();
         }
         [TestMethod]
-        public void Test_For_Retreiving_Employee_Data_From_Database()
+        public void Test_For_Retreiving_Employee_Birthday_Data_From_Database()
         {
-            Dictionary<string, string> dict = new Dictionary<string, string>();
+            Dictionary<string, Dictionary<string,string>> dict = new Dictionary<string,Dictionary<string,string>>();
             DataRetriever dataRetriever = new DataRetriever();
             dict=dataRetriever.RetrieveBirthdayData();
-            bool check = dict.ContainsKey("Prabhash");
+            bool check = dict.ContainsKey("16-06-1994");
+            Assert.IsTrue(check);
+        }
+        [TestMethod]
+        public void Test_For_Retreiving_Employee_Anniversary_Data_From_Database()
+        {
+            Dictionary<string, Dictionary<string, string>> dict = new Dictionary<string, Dictionary<string, string>>();
+            DataRetriever dataRetriever = new DataRetriever();
+            dict = dataRetriever.RetrieveAnniversaryData();
+            bool check = dict.ContainsKey("03-07-2017");
             Assert.IsTrue(check);
         }
     }

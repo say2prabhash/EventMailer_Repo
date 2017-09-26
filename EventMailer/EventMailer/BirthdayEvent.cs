@@ -10,13 +10,21 @@ namespace EventMailer
     class BirthdayEvent:IEvents
     {
         DataRetriever retriever;
+        DataAnalyzer analyzer;
+        Dictionary<string, Dictionary<string,string>> employeeBirthdayInfo;
         public BirthdayEvent()
         {
+            employeeBirthdayInfo = new Dictionary<string, Dictionary<string,string>>();
             retriever = new DataRetriever();
+            analyzer = new DataAnalyzer();
         }
         public void EventFirer()
         {
-            retriever.RetrieveBirthdayData();
+            employeeBirthdayInfo = retriever.RetrieveBirthdayData();
+            if(employeeBirthdayInfo!=null)
+            {
+                analyzer.BirtdayDataAnalyzer(employeeBirthdayInfo);
+            }
         }
     }
 }
